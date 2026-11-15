@@ -47,3 +47,10 @@ The plan object has the following fields:
 - `conflicts`: sorted list of `{ path, sources }` for targets requested by more than one operation.
 - `untouched`: sorted sources that no operation targets.
 - `safe`: `true` when `conflicts` is empty.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
